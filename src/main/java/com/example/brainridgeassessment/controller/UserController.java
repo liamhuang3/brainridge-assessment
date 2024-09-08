@@ -22,7 +22,11 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<String> createUser(@RequestBody UserCreateDTO userCreateDTO) {
+    public ResponseEntity<String> createUser(@RequestBody(required = false) UserCreateDTO userCreateDTO) {
+        // if a request body is not provided then we just create a new account with a balance of zero
+        if (userCreateDTO == null) {
+            userCreateDTO = new UserCreateDTO(0);
+        }
         return userService.createUser(userCreateDTO);
     }
 
