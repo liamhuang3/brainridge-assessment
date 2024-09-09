@@ -37,8 +37,8 @@ mvn spring-boot:run
 
 ## API Reference
 
-|URL| Method | Description|
-|------------|-------------|-------------------------------------|
-| /create | POST | Create a new user account with a specified balance |
-| /transaction | POST | Transfer funds from one user account to another |
-| /{id}/transactions | GET | Get the transaction history for an account |
+| URL               | Method | Description|
+|-------------------|-------------|-------------------------------------|
+| /create           | POST | Create a new user account with a specified balance |
+| /transaction      | POST | Transfer funds from one user account to another |
+| /transaction/{id} | GET | Get the transaction history for an account |

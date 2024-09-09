@@ -35,7 +35,7 @@ public class UserController {
         return transactionService.transferFunds(transferFundDTO);
     }
 
-    @GetMapping(value="/{id}/transactions", produces = "application/json")
+    @GetMapping(value="/transaction/{id}", produces = "application/json")
     public ResponseEntity<?> getTransactionHistory(@PathVariable Long id) {
         return transactionService.getTransactionHistory(id);
     }
