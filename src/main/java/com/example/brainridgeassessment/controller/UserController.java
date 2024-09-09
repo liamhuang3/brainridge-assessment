@@ -36,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping(value="/{id}/transactions", produces = "application/json")
-    public ResponseEntity<TransactionHistoryDTO> getTransactionHistory(@PathVariable Long id) {
+    public ResponseEntity<?> getTransactionHistory(@PathVariable Long id) {
         return transactionService.getTransactionHistory(id);
     }
 }

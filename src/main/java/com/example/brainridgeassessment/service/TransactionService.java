@@ -46,14 +46,14 @@ public class TransactionService {
         }
     }
 
-    public ResponseEntity<TransactionHistoryDTO> getTransactionHistory(Long id) {
+    public ResponseEntity<?> getTransactionHistory(Long id) {
         Optional<User> userOption = userRepository.getFromId(id);
         if (userOption.isPresent()) {
             User user = userOption.get();
             TransactionHistoryDTO transactionHistoryDTO = new TransactionHistoryDTO(user.getTransactions());
             return ResponseEntity.ok(transactionHistoryDTO);
         } else {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body("Invalid account ID.");
         }
     }
 }
