@@ -14,6 +14,10 @@ public class UserService {
     private UserRepository userRepository;
 
     public ResponseEntity<String> createUser(UserCreateDTO userCreateDTO) {
+        // if a request body is not provided then we just create a new account with a balance of zero
+        if (userCreateDTO == null) {
+            userCreateDTO = new UserCreateDTO(0);
+        }
         if (userCreateDTO.getBalance() >= 0) {
             User newUser = new User(userRepository.getNextId(), userCreateDTO.getBalance());
             userRepository.save(newUser);
