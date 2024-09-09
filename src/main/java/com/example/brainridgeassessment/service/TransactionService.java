@@ -22,24 +22,28 @@ public class TransactionService {
         Optional<User> receiverOption = userRepository.getFromId(transferFundDTO.getReceiverId());
 
         if (senderOption.isPresent() && receiverOption.isPresent()) {
-            User sender = senderOption.get();
-            User receiver = receiverOption.get();
+            if (transferFundDTO.getAmount() > 0) {
+                User sender = senderOption.get();
+                User receiver = receiverOption.get();
 
-            if (sender.getBalance() >= transferFundDTO.getAmount()) {
-                sender.setBalance(sender.getBalance() - transferFundDTO.getAmount());
-                receiver.setBalance(receiver.getBalance() + transferFundDTO.getAmount());
+                if (sender.getBalance() >= transferFundDTO.getAmount()) {
+                    sender.setBalance(sender.getBalance() - transferFundDTO.getAmount());
+                    receiver.setBalance(receiver.getBalance() + transferFundDTO.getAmount());
 
-                Transaction transaction = new Transaction(sender.getId(), receiver.getId(), transferFundDTO.getAmount());
+                    Transaction transaction = new Transaction(sender.getId(), receiver.getId(), transferFundDTO.getAmount());
 
-                sender.addTransaction(transaction);
-                receiver.addTransaction(transaction);
+                    sender.addTransaction(transaction);
+                    receiver.addTransaction(transaction);
 
-                userRepository.save(sender);
-                userRepository.save(receiver);
+                    userRepository.save(sender);
+                    userRepository.save(receiver);
 
-                return ResponseEntity.ok("Transaction was successful.");
+                    return ResponseEntity.ok("Transaction was successful.");
+                } else {
+                    return ResponseEntity.ok("Insufficient funds for transaction.");
+                }
             } else {
-                return ResponseEntity.ok("Insufficient funds for transaction.");
+                return ResponseEntity.badRequest().body("Cannot transfer a negative amount.");
             }
         } else {
             return ResponseEntity.badRequest().body("Invalid account IDs.");

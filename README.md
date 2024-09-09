@@ -35,6 +35,7 @@ mvn spring-boot:run
 ## Assumptions
 - The user balances cannot be negative
 - Creating a user with no specified balance will create user with 0 balance
+- Transactions cannot have a negative amount
 
 ## API Reference
 
